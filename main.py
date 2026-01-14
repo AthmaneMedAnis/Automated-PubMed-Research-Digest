@@ -1,5 +1,6 @@
 import argparse
 
+from datetime import datetime
 from os import path, makedirs
 from src.fetcher import fetch_pubmed
 from src.parser import pubmed_to_df
@@ -17,7 +18,10 @@ def parse_arguments():
 def output_checker(keywords:list, output:str=''):
     if not output:
         output = "Output"
-    output = path.join(output, "_".join(keywords))
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    dir_name = "_".join(keywords + [timestamp])
+
+    output = path.join(output, dir_name)
     if not path.exists(output):
         makedirs(output)
     return output
